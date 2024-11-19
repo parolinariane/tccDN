@@ -9,8 +9,8 @@
     </nav>
     <div class="user-profile">
       <div class="avatar-container" @click="toggleDropdown">
-        <i :class="['dropdown-icon', isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down']"></i>
-        <span class="user">ADM Isabela Bergamo</span>
+        <!--<i :class="['dropdown-icon', isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down']"></i>-->
+        <span class="user" onclick="window.location.href='/login'">Login/Cadastre-se</span>
         <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
       </div>
       <div v-show="isDropdownOpen" class="dropdown-menu">

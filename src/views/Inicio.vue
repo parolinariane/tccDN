@@ -9,8 +9,8 @@
         </nav>
         <div class="user-profile">
           <div class="avatar-container" @click="toggleDropdown">
-            <i :class="['dropdown-icon', isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down']"></i>
-            <span class="user">ADM Isabela Bergamo</span>
+            <!--<i :class="['dropdown-icon', isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down']"></i>-->
+            <span class="user" onclick="window.location.href='/login'">Login/Cadastre-se</span>
             <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
           </div>
           <div v-show="isDropdownOpen" class="dropdown-menu">
@@ -31,9 +31,10 @@
             <button class="start-button">
                 Vamos começar <i class="fas fa-arrow-right"></i>
             </button>
-            <button class="contact-button">
-                Contato <i class="fas fa-phone"></i> 
+            <button class="contact-button" onclick="window.location.href='/contato'">
+                Contato <i class="fas fa-phone"></i>
             </button>
+
           </div>
         </section>
         <img src="@/assets/imgHome.png" alt="Imagem de Meditação" class="meditation-img" />
@@ -131,7 +132,7 @@
             vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. 
             Fusce tempus tellus sed erat scelerisque venenatis.
           </p>
-          <button class="more-button1">Inscreva-se <i class="fas fa-arrow-right"></i></button>
+          <button class="more-button1" onclick="window.location.href='/login'">Inscreva-se <i class="fas fa-arrow-right"></i></button>
         </section>
         
 
