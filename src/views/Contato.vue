@@ -1,27 +1,29 @@
 <template>
   <header class="header">
-    <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
-    <nav class="nav-bar">
-      <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
-      <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
-      <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
-      <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
-    </nav>
-    <div class="user-profile">
-      <div class="avatar-container" @click="toggleDropdown">
-        <!--<i :class="['dropdown-icon', isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down']"></i>-->
-        <span class="user" onclick="window.location.href='/login'">Login/Cadastre-se</span>
-        <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
-      </div>
-      <div v-show="isDropdownOpen" class="dropdown-menu">
-        <ul>
-          <li><a href="#">Configurações</a></li>
-          <li><a href="#">Sair</a></li>
-        </ul>
-      </div>
+  <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
+  <nav class="nav-bar">
+    <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
+    <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
+    <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
+    <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
+  </nav>
+  <div class="user-profile">
+    <div class="avatar-container" @click="toggleDropdown">
+      <span class="user" @click="goToProfile">
+        {{ userName || 'Login/Cadastre-se' }}
+      </span>
+      <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
     </div>
+    <div v-show="isDropdownOpen" class="dropdown-menu">
+      <ul>
+        <li><a href="#">Configurações</a></li>
+        <li><a href="#" @click="logout">Sair</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
 
-  </header>
+
   <main class="main-content">
     <section class="intro-text">
       <img src="@/assets/instagram.png" alt="Instagram" class="social-icon instagram">
@@ -30,6 +32,42 @@
     </section>
   </main>
 
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<!-- Seção Contato -->
+<section class="contato-section">
+  <div class="contato-container">
+    <div class="contato-info">
+      <h3 class="contato-titulo">NOSSO CONTATO</h3>
+      <h2 class="contato-subtitulo">Entre em contato conosco</h2>
+      <p class="contato-texto">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
+        vestibulum a ipsum sed, suscipit sodales ex.
+      </p>
+      <p class="contato-social-texto">Siga-nos nas redes sociais</p>
+      <div class="contato-icones">
+        <a href="#"><i class="fab fa-facebook fa-2x"></i></a>
+        <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
+      </div>
+    </div>
+    <div class="contato-formulario">
+      <form>
+        <div class="contato-nome">
+          <input type="text" placeholder="Primeiro Nome" class="input-nome" />
+          <input type="text" placeholder="Último Nome" class="input-nome" />
+        </div>
+        <input type="email" placeholder="Seu Email" class="input-email" />
+        <textarea placeholder="Sua Mensagem" class="input-mensagem"></textarea>
+        <button type="submit" class="contato-botao">Enviar Mensagem <i class="fas fa-arrow-right"></i></button>
+      </form>
+    </div>
+  </div>
+</section>
 
  <!-- Footer -->
 <footer class="footer-section">
@@ -52,6 +90,7 @@ name: "PaginaInicio",
 data() {
   return {
     isDropdownOpen: false,
+    userName: localStorage.getItem('userName') || null, 
   };
 },
 
@@ -59,11 +98,146 @@ methods: {
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   },
+   
+   goToProfile() {
+      if (this.userName) {
+        this.$router.push('/perfil'); 
+      } else {
+        window.location.href = '/login'; 
+      }
+    },
+    
+    logout() {
+      localStorage.removeItem('userName');
+      this.userName = null; 
+      window.location.href = '/login'; 
+    }
+  
 },
 };
 </script>
 
 <style scoped>
+
+/* Seção de Contato */
+.contato-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0;
+  background-color: #fdf9f6;
+}
+
+.contato-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 80%;
+  max-width: 1200px;
+}
+
+.contato-info {
+  flex: 1;
+  margin-right: 30px;
+}
+
+.contato-titulo {
+  color: #6c9b7f;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 600; 
+}
+
+.contato-subtitulo {
+  font-size: 40px;
+  color: #523f35;
+  margin-bottom: 15px;
+  font-family: 'Cormorant', serif; 
+  font-weight: 400; 
+}
+
+.contato-texto {
+  font-size: 16px;
+  color: #9999;
+  margin-bottom: 30px;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 400; 
+}
+
+.contato-social-texto {
+  font-size: 22px;
+  color: #523f35;
+  margin-bottom: 10px;
+  font-family: 'Cormorant', serif; 
+  font-weight: 500; 
+}
+
+.contato-icones a {
+  margin-right: 10px;
+  color: #6c9b7f;
+  text-decoration: none;
+}
+
+.contato-icones a:hover {
+  color: #186215;
+}
+
+/* Formulário */
+.contato-formulario {
+  flex: 1;
+  background-color: #f4ebe4;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contato-nome {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.input-nome,
+.input-email,
+.input-mensagem {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.input-nome {
+  flex: 1;
+}
+
+.input-mensagem {
+  height: 100px;
+  resize: none;
+}
+
+.contato-botao {
+  background-color: #6c9b7f;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contato-botao:hover {
+  background-color: #186215;
+}
 
 /* Estilo para redes sociais */
 .intro-text {
@@ -72,6 +246,7 @@ methods: {
   align-items: center; 
   gap: 20px; 
   margin-top: 20px; 
+  margin-left: 12%;
 }
 
 .social-icon {

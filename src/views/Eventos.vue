@@ -1,65 +1,88 @@
 <template>
-  <header class="header">
-    <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
-    <nav class="nav-bar">
-      <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
-      <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
-      <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
-      <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
-    </nav>
-    <div class="user-profile">
-      <div class="avatar-container" @click="toggleDropdown">
-        <!--<i :class="['dropdown-icon', isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down']"></i>-->
-        <span class="user" onclick="window.location.href='/login'">Login/Cadastre-se</span>
-        <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
-      </div>
-      <div v-show="isDropdownOpen" class="dropdown-menu">
-        <ul>
-          <li><a href="#">Configurações</a></li>
-          <li><a href="#">Sair</a></li>
-        </ul>
-      </div>
+<header class="header">
+  <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
+  <nav class="nav-bar">
+    <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
+    <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
+    <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
+    <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
+  </nav>
+  <div class="user-profile">
+    <div class="avatar-container" @click="toggleDropdown">
+      <span class="user" @click="goToProfile">
+        <!-- Exibe o nome do usuário se ele estiver logado, caso contrário exibe "Login/Cadastre-se" -->
+        {{ userName || 'Login/Cadastre-se' }}
+      </span>
+      <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
     </div>
-
-  </header>
+    <div v-show="isDropdownOpen" class="dropdown-menu">
+      <ul>
+        <li><a href="#">Configurações</a></li>
+        <li><a href="#" @click="logout">Sair</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
 
 
   <!-- Seção O Grupo -->
   <section class="sobre-section">
       <h3 class="dinastiaText2">AGENDA DE EVENTOS</h3>
-      <div class="event-list">
-    <div class="event-card">
-      <div class="event-date">
-        <p class="date-day">15</p>
-        <p class="date-month">JUN</p>
+
+      <div v-if="events.length === 0" class="no-events">
+        <p>Não há eventos cadastrados.</p>
       </div>
-      <div class="event-details">
-        <h4 class="event-name">Festa de Inverno</h4>
-        <p class="event-description">Celebre a chegada do inverno com uma festa especial cheia de música, comidas típicas e diversão.</p>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date">
-        <p class="date-day">22</p>
-        <p class="date-month">JUL</p>
-      </div>
-      <div class="event-details">
-        <h4 class="event-name">Workshop de Fotografia</h4>
-        <p class="event-description">Aprenda técnicas de fotografia com profissionais e melhore suas habilidades de captura de imagens.</p>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date">
-        <p class="date-day">10</p>
-        <p class="date-month">AGO</p>
-      </div>
-      <div class="event-details">
-        <h4 class="event-name">Festival de Música</h4>
-        <p class="event-description">Um evento vibrante com apresentações ao vivo de artistas locais e nacionais para animar o público.</p>
+
+      <div v-else class="event-list">
+      <div v-for="event in events" :key="event.id" class="event-card">
+        <div class="event-date">
+          <p class="date-day">{{ formatDateDay(event.diaEvento) }}</p>
+          <p class="date-month">{{ formatDateMonth(event.diaEvento) }}</p>
+        </div>
+        <div class="event-details">
+          <h4 class="event-name">{{ event.nomeEvento }}</h4>
+          <p class="event-description">{{ event.descricaoEvento }}</p>
+          <p class="event-price">Preço: R$ {{ event.valorEvento.toFixed(2) }}</p>
+          <div v-if="isAdmin">
+            <button class="edit-button" @click="openEditModal(event)">Editar Evento<i class="fas fa-edit"></i></button>
+            <button class="delete-button" @click="deleteEvent(event.id)">Deletar Evento <i class="fas fa-trash"></i></button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-      <!--<button class="more-button">Veja mais <i class="fas fa-arrow-right"></i></button>-->
+
+     <!-- Modal de Edição -->
+     <div v-if="isEditModalOpen" class="edit-modal">
+      <div class="modal-content">
+        <h3>Editar Evento</h3>
+        <form @submit.prevent="updateEvent">
+          <div class="form-group">
+            <label for="edit-name">Nome do Evento:</label><br>
+            <input v-model="currentEvent.nomeEvento" type="text" id="edit-name" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-description">Descrição:</label><br>
+            <textarea v-model="currentEvent.descricaoEvento" id="edit-description" rows="3" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit-date">Data:</label><br>
+            <input v-model="currentEvent.diaEvento" type="date" id="edit-date" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-price">Preço:</label><br>
+            <input v-model="currentEvent.valorEvento" type="number" id="edit-price" required />
+          </div>
+          <button type="submit" class="save-button">Salvar</button>
+          <button type="button" class="cancel-button" @click="closeEditModal">Cancelar</button>
+        </form>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div v-if="isAdmin">
+      <button class="more-button" onclick="window.location.href='/cadastro'">Adicionar Evento <i class="fas fa-plus"></i></button>
+    </div>
   </section>
  
   <br>
@@ -84,12 +107,19 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-name: "PaginaInicio",
+name: "PaginaEventos",
 
 data() {
   return {
     isDropdownOpen: false,
+    userName: localStorage.getItem('userName') || null, // Carregar o nome do usuário do localStorage
+    isAdmin: localStorage.getItem('role') === 'Admin', // Verificar se o usuário é Admin
+    events: [], // Armazena os eventos recebidos da API
+    isEditModalOpen: false,
+    currentEvent: {}, // Evento que está sendo editado
   };
 },
 
@@ -97,13 +127,202 @@ methods: {
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   },
-},
+  async fetchEvents() {
+      try {
+        const response = await axios.get("http://localhost:5161/api/evento");
+        this.events = response.data; // Preenche a lista de eventos
+      } catch (error) {
+        console.error("Erro ao buscar os eventos:", error);
+        alert("Não foi possível carregar os eventos.");
+      }
+    },
+     // Formata o dia do evento
+     formatDateDay(dateString) {
+      const date = new Date(dateString);
+      return date.getDate().toString().padStart(2, "0");
+    },
+
+    openEditModal(event) {
+      this.currentEvent = { ...event }; // Copia os dados do evento selecionado
+      this.isEditModalOpen = true;
+    },
+
+    closeEditModal() {
+      this.isEditModalOpen = false;
+      this.currentEvent = {};
+    },
+
+    async updateEvent() {
+      try {
+        await axios.put(`http://localhost:5161/api/evento/${this.currentEvent.id}`, this.currentEvent);
+        const index = this.events.findIndex((e) => e.id === this.currentEvent.id);
+        if (index !== -1) {
+          this.events.splice(index, 1, { ...this.currentEvent });
+        }
+        this.closeEditModal();
+        alert("Evento atualizado com sucesso!");
+      } catch (error) {
+        console.error("Erro ao atualizar o evento:", error);
+        alert("Não foi possível atualizar o evento.");
+      }
+    },
+
+    async deleteEvent(id) {
+      if (confirm("Tem certeza que deseja deletar este evento?")) {
+        try {
+          await axios.delete(`http://localhost:5161/api/evento/${id}`);
+          this.events = this.events.filter(event => event.id !== id); // Remove o evento da lista
+          alert("Evento deletado com sucesso!");
+        } catch (error) {
+          console.error("Erro ao deletar o evento:", error);
+          alert("Não foi possível deletar o evento.");
+        }
+      }
+    },
+
+    // Formata o mês do evento
+    formatDateMonth(dateString) {
+      const date = new Date(dateString);
+      const months = [
+        "JAN",
+        "FEV",
+        "MAR",
+        "ABR",
+        "MAI",
+        "JUN",
+        "JUL",
+        "AGO",
+        "SET",
+        "OUT",
+        "NOV",
+        "DEZ",
+      ];
+      return months[date.getMonth()];
+    },
+     // Função para redirecionar para o perfil do usuário
+   goToProfile() {
+      if (this.userName) {
+        this.$router.push('/perfil'); // Redireciona para o perfil do usuário, caso esteja logado
+      } else {
+        window.location.href = '/login'; // Redireciona para a página de login se não estiver logado
+      }
+    },
+    // Função para sair (remover o nome do localStorage)
+    logout() {
+      localStorage.removeItem('userName'); // Remove o nome do usuário do localStorage
+      this.userName = null; // Reseta o nome no Vue.js
+      window.location.href = '/login'; // Redireciona para a página de login
+    }
+  },
+
+    // Busca os eventos quando o componente é carregado
+    mounted() {
+    this.fetchEvents();
+  },
 };
 </script>
 
 <style scoped>
 
 /* Estilo para Agenda de Eventos */
+
+.edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 500; 
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+}
+
+.save-button {
+  margin-top: 10px;
+  padding: 10px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  margin-top: 10px;
+  padding: 10px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.edit-button {
+  background-color: #186215;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 500; 
+  color: white;
+  font-size: 13px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-right: 10px; /* Adiciona espaçamento à direita do botão Editar */
+}
+
+.edit-button:hover {
+  background-color: #4f915c; 
+  transform: translateY(-2px);
+}
+
+.edit-button i {
+  margin-left: 5px;
+  font-size: 12px; 
+  color: white;
+}
+
+.delete-button {
+  background-color: #186215;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 500; 
+  color: white;
+  font-size: 13px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #4f915c; 
+  transform: translateY(-2px);
+}
+
+.delete-button i {
+  margin-left: 5px;
+  font-size: 12px; 
+  color: white;
+}
+
+.event-price {
+  font-size: 14px;
+  color: #186215;
+  font-weight: bold;
+  margin-top: 5px;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 400; 
+}
 
 .event-list {
   display: flex;
@@ -546,7 +765,7 @@ font-weight: 400;
 .more-button {
 margin-top: 15px;
 margin-left: 70px;
-background-color: #8ecf98;
+background-color: #186215;
 border: none;
 padding: 10px 20px;
 cursor: pointer;
@@ -559,7 +778,7 @@ transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .more-button:hover {
-background-color: #5cb16d; 
+background-color: #4f915c; 
 transform: translateY(-2px);
 }
 

@@ -1,27 +1,30 @@
 <template>
-      <header class="header">
-        <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
-        <nav class="nav-bar">
-          <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
-          <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
-          <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
-          <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
-        </nav>
-        <div class="user-profile">
-          <div class="avatar-container" @click="toggleDropdown">
-            <!--<i :class="['dropdown-icon', isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down']"></i>-->
-            <span class="user" onclick="window.location.href='/login'">Login/Cadastre-se</span>
-            <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
-          </div>
-          <div v-show="isDropdownOpen" class="dropdown-menu">
-            <ul>
-              <li><a href="#">Configurações</a></li>
-              <li><a href="#">Sair</a></li>
-            </ul>
-          </div>
-        </div>
+<header class="header">
+  <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
+  <nav class="nav-bar">
+    <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
+    <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
+    <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
+    <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
+  </nav>
+  <div class="user-profile">
+    <div class="avatar-container" @click="toggleDropdown">
+      <span class="user" @click="goToProfile">
+        <!-- Exibe o nome do usuário se ele estiver logado, caso contrário exibe "Login/Cadastre-se" -->
+        {{ userName || 'Login/Cadastre-se' }}
+      </span>
+      <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+    </div>
+    <div v-show="isDropdownOpen" class="dropdown-menu">
+      <ul>
+        <li><a href="#">Configurações</a></li>
+        <li><a href="#" @click="logout">Sair</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
 
-      </header>
+
       <main class="main-content">
         <section class="intro-text">
           <h3 class="dinastiaText">DINASTIA NAGUAL</h3>
@@ -59,69 +62,131 @@
       <br>
       
       <!-- Seção O que fazemos -->
+<section class="oque-section">
+  <h3 class="dinastiaText3">O QUE FAZEMOS?</h3>
+  <p class="efeitoText3">Buscamos levar o amor, a cura e o conhecimento a todos</p>
+
+  <div class="cards-container">
+    <!-- Card 1 -->
+    <div class="card-container">
+      <img src="@/assets/palestras.png" alt="Palestras" class="card-image-top">
+      <div class="card-content">
+        <h3 class="card-title">Palestras</h3>
+        <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
+        <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
+        <div class="button-line"></div> 
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card-container">
+      <img src="@/assets/vivencias.jpg" alt="Vivências" class="card-image-top">
+      <div class="card-content">
+        <h3 class="card-title">Vivências</h3>
+        <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
+        <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
+        <div class="button-line"></div> 
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card-container">
+      <img src="@/assets/ritos.png" alt="Ritos" class="card-image-top">
+      <div class="card-content">
+        <h3 class="card-title">Ritos</h3>
+        <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
+        <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
+        <div class="button-line"></div> 
+      </div>
+    </div>
+  </div>
+</section>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+      <!-- Seção O que fazemos -->
       <section class="oque-section">
-        <h3 class="dinastiaText3">O QUE FAZEMOS?</h3>
-        <p class="efeitoText3">Buscamos levar o amor, a cura e o conhecimento a todos</p>
-        
-        <div class="cards-container">
-          
-          <div class="card-container">
-            <div class="card1">
-              <img src="@/assets/palestras.png" alt="Palestras">
-            </div>
-            <div class="imgCard1">
-              <img src="@/assets/card.png" alt="Card Palestras">
-            </div>
-          </div>
-
-          <div class="card-container">
-            <div class="card1">
-              <img src="@/assets/palestras.png" alt="Palestras">
-            </div>
-            <div class="imgCard1">
-              <img src="@/assets/card.png" alt="Card Palestras">
-            </div>
-          </div>
-
-          <div class="card-container">
-            <div class="card1">
-              <img src="@/assets/palestras.png" alt="Palestras">
-            </div>
-            <div class="imgCard1">
-              <img src="@/assets/card.png" alt="Card Palestras">
-            </div>
-          </div>
-
-
-          <div class="card-container">
-            <div class="card1">
-              <img src="@/assets/palestras.png" alt="Palestras">
-            </div>
-            <div class="imgCard1">
-              <img src="@/assets/card.png" alt="Card Palestras">
-            </div>
-          </div>
-
-
-          <div class="card-container">
-            <div class="card1">
-              <img src="@/assets/palestras.png" alt="Palestras">
-            </div>
-            <div class="imgCard1">
-              <img src="@/assets/card.png" alt="Card Palestras">
-            </div>
-          </div>
-
-          <div class="card-container">
-            <div class="card1">
-              <img src="@/assets/palestras.png" alt="Palestras">
-            </div>
-            <div class="imgCard1">
-              <img src="@/assets/card.png" alt="Card Palestras">
-            </div>
+      <div class="cards-container">
+        <!-- Card 1 -->
+        <div class="card-container">
+          <img src="@/assets/encontro-mulheres.png" alt="Encontro de mulheres" class="card-image-top">
+          <div class="card-content">
+            <h3 class="card-title">Encontro de Mulheres</h3>
+            <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
+            <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
+            <div class="button-line"></div> 
           </div>
         </div>
-      </section>
+
+        <!-- Card 2 -->
+        <div class="card-container">
+          <img src="@/assets/consagracoes.png" alt="Vivências" class="card-image-top">
+          <div class="card-content">
+            <h3 class="card-title">Consagrações Sagradas</h3>
+            <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
+            <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
+            <div class="button-line"></div> 
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card-container">
+          <img src="@/assets/jogos.png" alt="Ritos" class="card-image-top">
+          <div class="card-content">
+            <h3 class="card-title">Jogos Inteligentes</h3>
+            <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
+            <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
+            <div class="button-line"></div> 
+          </div>
+        </div>
+      </div>
+    </section>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!-- Seção números -->
+<section class="stats-section">
+  <div class="stats-container">
+    <div class="stat-item">
+      <i class="fas fa-smile stat-icon"></i>
+      <h3 class="stat-number">950+</h3>
+      <p class="stat-description">Pessoas Transformadas</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-user-graduate stat-icon"></i>
+      <h3 class="stat-number">20+</h3>
+      <p class="stat-description">Desbravadores do Conhecimento</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-comment-dots stat-icon"></i>
+      <h3 class="stat-number">950+</h3>
+      <p class="stat-description">Depoimentos Positivos</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-leaf stat-icon"></i>
+      <h3 class="stat-number">30+</h3>
+      <p class="stat-description">Anos de <br> Experiência</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-home stat-icon"></i>
+      <h3 class="stat-number">10+</h3>
+      <p class="stat-description">Cidades <br>Visitadas</p>
+    </div>
+  </div>
+</section>
 
        <!-- Seção membro -->
        <section class="membro-section">
@@ -134,20 +199,14 @@
           </p>
           <button class="more-button1" onclick="window.location.href='/login'">Inscreva-se <i class="fas fa-arrow-right"></i></button>
         </section>
-        
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 
-        <!-- Seção Conteúdos -->
-      <section class="conteudo-section">
-          <h3 class="dinastiaText5">CONTEÚDOS</h3>
-          <p class="efeitoText5">Conteúdo impresso e digital para aprofundamento</p>
-          <p class="subefeitoText5">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
-            vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. 
-            Fusce tempus tellus sed erat scelerisque venenatis. Donec consequat ultrices quam, 
-            vitae dignissim mi sodales non.
-          </p>
-          <button class="more-button3">Veja mais <i class="fas fa-arrow-right"></i></button>
-      </section>
+
 
      <!-- Footer -->
     <footer class="footer-section">
@@ -170,6 +229,7 @@
     data() {
       return {
         isDropdownOpen: false,
+        userName: localStorage.getItem('userName') || null, // Carregar o nome do usuário do localStorage
       };
     },
 
@@ -177,11 +237,154 @@
       toggleDropdown() {
         this.isDropdownOpen = !this.isDropdownOpen;
       },
+       // Função para redirecionar para o perfil do usuário
+   goToProfile() {
+      if (this.userName) {
+        this.$router.push('/perfil'); // Redireciona para o perfil do usuário, caso esteja logado
+      } else {
+        window.location.href = '/login'; // Redireciona para a página de login se não estiver logado
+      }
+    },
+    // Função para sair (remover o nome do localStorage)
+    logout() {
+      localStorage.removeItem('userName'); // Remove o nome do usuário do localStorage
+      this.userName = null; // Reseta o nome no Vue.js
+      window.location.href = '/'; // Redireciona para a página de login
+    }
     },
   };
   </script>
   
   <style scoped>
+/* Estilo para a seção */
+.stats-section {
+  background-color: #fff;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* Cada item */
+.stat-item {
+  flex: 1 1 150px;
+  max-width: 200px;
+}
+
+.stat-icon {
+  font-size: 40px;
+  color: #6bb162; 
+  margin-bottom: 10px;
+}
+
+.stat-number {
+  font-size: 32px;
+  color: #4d2717;
+  margin: 0;
+}
+
+.stat-description {
+  font-size: 18px;
+  color: #999999; 
+  margin: 5px 0 0;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 500; 
+}
+
+.button-line {
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff; 
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.card-button:hover + .button-line {
+  background-color: #ffffff; 
+}
+
+.oque-section {
+  text-align: center;
+  padding: 20px;
+}
+
+.dinastiaText3 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.efeitoText3 {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card-container {
+  width: 300px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-image-top {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-content {
+  background-color: #336633; 
+  color: white;
+  padding: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.card-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-family: 'Cormorant', serif; 
+  font-weight: 400; 
+  margin-top: -5px;
+}
+
+.card-description {
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-family: 'Cormorant', serif; 
+  font-weight: 400;
+}
+
+.card-button {
+  background-color: #336633;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 400; 
+}
+
+.card-button:hover {
+  color: #6c9b7f;
+}
+
   
 /* Estilo para o footer */
 .footer-section {
@@ -260,94 +463,6 @@
   }
 }
 
-   /* Estilo da seção "Conteúdo" */
-   .conteudo-section {
-  margin-top: 90px;
-  padding: 60px;
-  position: relative;
-  text-align: center;
-  width: 100%; 
-  height: 100vh;  
-  box-sizing: border-box;
-}
-
-.dinastiaText5 {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  padding: 0 20px; 
-  color: #6c9b7f;  
-  font-size: 19px;
-  font-family: 'Poppins', sans-serif; 
-  font-weight: 600;
-}
-
-.dinastiaText5::before,
-.dinastiaText5::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: 30%;
-  height: 2px;
-  background-color: #186215; 
-}
-
-.dinastiaText5::before {
-  left: 0;
-  transform: translateY(-50%);
-}
-
-.dinastiaText5::after {
-  right: 0;
-  transform: translateY(-50%);
-}
-
-  .efeitoText5 {
-    margin-left: 70px;
-    color:  #513125;
-    text-decoration: none;
-    font-size: 60px;
-    font-family: 'Cormorant', serif; 
-    font-weight: 400; 
-  }
-  
-  .more-button3 {
-    margin-top: 15px;
-    margin-left: 70px;
-    background-color: #8ecf98;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-right: 10px;
-    font-family: 'Poppins', sans-serif; 
-    font-weight: 500; 
-    color: white;
-    font-size: 18px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-
-  .more-button3:hover {
-    background-color: #5cb16d; 
-    transform: translateY(-2px);
-  }
-
-  .more-button3 i {
-    margin-left: 5px;
-    font-size: 16px; 
-    color: white;
-  }
-
-  .subefeitoText5 {
-    margin-left: 70px; 
-    color:  #7c7c7c99;
-    text-decoration: none;
-    font-size: 17px;
-    font-family: 'Poppins', sans-serif; 
-    font-weight: 400; 
-  }
-
   /* Estilo da seção "Membros" */
   .membro-section {
     margin-top: 90px;
@@ -356,8 +471,8 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centraliza verticalmente */
-    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center;
+    align-items: center; 
     width: 100%;
     height: 100vh;
     background-image: url('@/assets/fundoMembro.png');
@@ -449,7 +564,7 @@
   top: 50%;
   width: 40%;
   height: 2px;
-  background-color: #186215; 
+  background-color: #6c9b7f; 
 }
 
 .dinastiaText3::before {
@@ -602,7 +717,7 @@
     display: block;
     width: 250px; 
     height: 2px; 
-    background-color: #186215; 
+    background-color: #6c9b7f; 
     margin-left: 10px; 
 }
 
@@ -819,7 +934,7 @@
   top: 50%;
   width: 30%;
   height: 2px;
-  background-color: #186215; 
+  background-color: #6c9b7f; 
 }
 
 .dinastiaText2::before {

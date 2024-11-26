@@ -1,27 +1,29 @@
 <template>
-  <header class="header">
-    <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
-    <nav class="nav-bar">
-      <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
-      <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
-      <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
-      <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
-    </nav>
-    <div class="user-profile">
-      <div class="avatar-container" @click="toggleDropdown">
-        <!--<i :class="['dropdown-icon', isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down']"></i>-->
-        <span class="user" onclick="window.location.href='/login'">Login/Cadastre-se</span>
-        <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
-      </div>
-      <div v-show="isDropdownOpen" class="dropdown-menu">
-        <ul>
-          <li><a href="#">Configurações</a></li>
-          <li><a href="#">Sair</a></li>
-        </ul>
-      </div>
+<header class="header">
+  <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
+  <nav class="nav-bar">
+    <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
+    <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
+    <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
+    <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
+  </nav>
+  <div class="user-profile">
+    <div class="avatar-container" @click="toggleDropdown">
+      <span class="user" @click="goToProfile">
+        <!-- Exibe o nome do usuário se ele estiver logado, caso contrário exibe "Login/Cadastre-se" -->
+        {{ userName || 'Login/Cadastre-se' }}
+      </span>
+      <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
     </div>
+    <div v-show="isDropdownOpen" class="dropdown-menu">
+      <ul>
+        <li><a href="#">Configurações</a></li>
+        <li><a href="#" @click="logout">Sair</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
 
-  </header>
   <main class="main-content">
     <section class="intro-text">
       <h3 class="dinastiaText">SOBRE NÓS</h3>
@@ -31,20 +33,103 @@
     <img src="@/assets/imgSobre.png" alt="Imagem de Meditação" class="meditation-img" />
   </main>
 
-  <!-- Seção O Grupo -->
-  <section class="sobre-section">
-      <h3 class="dinastiaText2">O GRUPO</h3>
-      <p class="efeitoText2">Nossos Servidores</p>
-     
-      <button class="more-button">Veja mais <i class="fas fa-arrow-right"></i></button>
-  </section>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+  <!-- Seção números -->
+<section class="stats-section">
+  <div class="stats-container">
+    <div class="stat-item">
+      <i class="fas fa-smile stat-icon"></i>
+      <h3 class="stat-number">950+</h3>
+      <p class="stat-description">Pessoas Transformadas</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-user-graduate stat-icon"></i>
+      <h3 class="stat-number">20+</h3>
+      <p class="stat-description">Desbravadores do Conhecimento</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-comment-dots stat-icon"></i>
+      <h3 class="stat-number">950+</h3>
+      <p class="stat-description">Depoimentos Positivos</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-leaf stat-icon"></i>
+      <h3 class="stat-number">30+</h3>
+      <p class="stat-description">Anos de <br> Experiência</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-home stat-icon"></i>
+      <h3 class="stat-number">10+</h3>
+      <p class="stat-description">Cidades <br>Visitadas</p>
+    </div>
+  </div>
+</section>
+
+  
+<!-- Seção O Grupo -->
+<section class="sobre-section">
+  <h3 class="dinastiaText2">O GRUPO</h3>
+  <p class="efeitoText2">Nossos Servidores</p>
+
+  <div class="equipe-container">
+    <!-- Membro 1 -->
+    <div class="equipe-card">
+      <img src="@/assets/isabelaBergamo.png" alt="Membro 1" class="equipe-img">
+      <div class="equipe-info">
+        <p class="nome">Isabela Bergamo</p><br>
+        <p class="descricao-servidor"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
+          vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. </p>
+      </div>
+    </div>
+
+    <!-- Membro 2 -->
+    <div class="equipe-card">
+      <img src="@/assets/vanderleiCarneosso.png" alt="Membro 2" class="equipe-img">
+      <div class="equipe-info">
+        <p class="nome">Vanderlei Carneosso</p><br>
+        <p class="descricao-servidor"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
+          vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. </p>
+      </div>
+    </div>
+
+    <!-- Membro 3 -->
+    <div class="equipe-card">
+      <img src="@/assets/leticiaGarbin.png" alt="Membro 3" class="equipe-img">
+      <div class="equipe-info">
+        <p class="nome">Leticia Garbin</p><br>
+        <p class="descricao-servidor"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
+          vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. </p>
+      </div>
+    </div>
+
+    <!-- Membro 4 -->
+    <div class="equipe-card">
+      <img src="@/assets/leticiaGebara.png" alt="Membro 4" class="equipe-img">
+      <div class="equipe-info">
+        <p class="nome">Leticia Gebara</p><br>
+        <p class="descricao-servidor"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
+          vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. </p>
+      </div>
+    </div>
+  </div>
+</section>
  
   <br>
   <br>
   <br>
   <br>
-
-
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
 
  <!-- Footer -->
 <footer class="footer-section">
@@ -67,6 +152,7 @@ name: "PaginaInicio",
 data() {
   return {
     isDropdownOpen: false,
+    userName: localStorage.getItem('userName') || null,
   };
 },
 
@@ -74,11 +160,118 @@ methods: {
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   },
+   
+   goToProfile() {
+      if (this.userName) {
+        this.$router.push('/perfil'); 
+      } else {
+        window.location.href = '/login';
+      }
+    },
+   
+    logout() {
+      localStorage.removeItem('userName'); 
+      this.userName = null; 
+      window.location.href = '/login';
+    }
 },
 };
 </script>
 
 <style scoped>
+
+/* Contêiner de Equipe */
+.descricao-servidor{
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 400; 
+  font-size: 14px;
+  text-align: left;
+}
+
+.nome{
+  font-family: 'Cormorant', serif; 
+  font-weight: bold;
+  font-size: 25px;
+  text-align: left;
+}
+
+.equipe-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Cartão de Equipe */
+.equipe-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  width: 400px;
+  max-width: 100%;
+  gap: 20px;
+}
+
+.equipe-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.equipe-info h4 {
+  color: #333;
+  margin: 0;
+}
+
+.equipe-info p {
+  color: #555;
+  margin: 0;
+}
+
+/* Estilo para a seção */
+.stats-section {
+  background-color: #fff;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* Cada item */
+.stat-item {
+  flex: 1 1 150px;
+  max-width: 200px;
+}
+
+.stat-icon {
+  font-size: 40px;
+  color: #6bb162; 
+  margin-bottom: 10px;
+}
+
+.stat-number {
+  font-size: 32px;
+  color: #4d2717;
+  margin: 0;
+}
+
+.stat-description {
+  font-size: 18px;
+  color: #999999; 
+  margin: 5px 0 0;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 500; 
+}
+
 
 /* Estilo para o footer */
 .footer-section {
