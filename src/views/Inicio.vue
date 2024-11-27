@@ -10,7 +10,6 @@
   <div class="user-profile">
     <div class="avatar-container" @click="toggleDropdown">
       <span class="user" @click="goToProfile">
-        <!-- Exibe o nome do usuário se ele estiver logado, caso contrário exibe "Login/Cadastre-se" -->
         {{ userName || 'Login/Cadastre-se' }}
       </span>
       <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
@@ -24,12 +23,13 @@
   </div>
 </header>
 
-
       <main class="main-content">
         <section class="intro-text">
           <h3 class="dinastiaText">DINASTIA NAGUAL</h3>
           <p class="efeitoText">Conheça a ti <br> mesmo</p>
-          <p class="subefeitoText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+          <p class="subefeitoText">Prepare-se para uma jornada épica de autodescoberta, onde cada passo revela um universo inexplorado dentro de você. 
+            Por meio de eventos repletos de experiências imersivas e conhecimentos variados, você será conduzido a despertar o que há de mais único em sua essência. 
+            Esta é sua chance de desvendar o extraordinário que o torna singular e de liberar a melhor e mais poderosa versão de si mesmo.</p>
           <div class="buttons">
             <button class="start-button">
                 Vamos começar <i class="fas fa-arrow-right"></i>
@@ -42,16 +42,14 @@
         </section>
         <img src="@/assets/imgHome.png" alt="Imagem de Meditação" class="meditation-img" />
       </main>
-  
+
       <!-- Seção Sobre -->
       <section class="sobre-section">
           <h3 class="dinastiaText2">SOBRE O DINASTIA NAGUAL</h3>
           <p class="efeitoText2">A felicidade é uma decisão, não um destino. Realize isso conosco!</p>
           <p class="subefeitoText2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
-            vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. 
-            Fusce tempus tellus sed erat scelerisque venenatis. Donec consequat ultrices quam, 
-            vitae dignissim mi sodales non.
+            A felicidade é um escolha, um decisão, é o poder pessoal. Um verdadeiro sábio é capaz de enfrentar qualquer desafio, superar qualquer obstáculo e triunfar, pois carrega dentro de si os ingredientes para o sucesso: amor-próprio, paz interior e plena consciência de si mesmo e do mundo ao redor. 
+            Nossa missão é seguir os passos dos sábios, guiados sempre pela humildade, pelo amor e por uma consciência elevada.
           </p>
           <button class="more-button">Veja mais <i class="fas fa-arrow-right"></i></button>
       </section>
@@ -62,45 +60,45 @@
       <br>
       
       <!-- Seção O que fazemos -->
-<section class="oque-section">
-  <h3 class="dinastiaText3">O QUE FAZEMOS?</h3>
-  <p class="efeitoText3">Buscamos levar o amor, a cura e o conhecimento a todos</p>
+      <section class="oque-section">
+        <h3 class="dinastiaText3">O QUE FAZEMOS?</h3>
+        <p class="efeitoText3">Buscamos levar o amor, a cura e o conhecimento a todos</p>
 
-  <div class="cards-container">
-    <!-- Card 1 -->
-    <div class="card-container">
-      <img src="@/assets/palestras.png" alt="Palestras" class="card-image-top">
-      <div class="card-content">
-        <h3 class="card-title">Palestras</h3>
-        <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
-        <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
-        <div class="button-line"></div> 
-      </div>
-    </div>
+        <div class="cards-container">
+          <!-- Card 1 -->
+          <div class="card-container">
+            <img src="@/assets/palestras.jpeg" alt="Palestras" class="card-image-top">
+            <div class="card-content">
+              <h3 class="card-title">Palestras</h3>
+              <p class="card-description">Palestras conduzidas por especialistas com profundo conhecimento teórico e prático, abrangendo temas de ciência, espiritualidade e esoterismo, em uma abordagem rica e inspiradora.</p>
+              <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
+              <div class="button-line"></div> 
+            </div>
+          </div>
 
-    <!-- Card 2 -->
-    <div class="card-container">
-      <img src="@/assets/vivencias.jpg" alt="Vivências" class="card-image-top">
-      <div class="card-content">
-        <h3 class="card-title">Vivências</h3>
-        <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
-        <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
-        <div class="button-line"></div> 
-      </div>
-    </div>
+          <!-- Card 2 -->
+          <div class="card-container">
+            <img src="@/assets/vivencias.jpeg" alt="Vivências" class="card-image-top">
+            <div class="card-content">
+              <h3 class="card-title">Vivências</h3>
+              <p class="card-description">Exploramos o poder da neuroplasticidade, conduzindo vivências intensas e transformadoras que esculpem novos caminhos neurais. Cada experiência é um passo rumo à renovação, cuidando profundamente do corpo, nutrindo a mente e elevando a alma a um novo patamar de consciência.</p>
+              <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
+              <div class="button-line"></div> 
+            </div>
+          </div>
 
-    <!-- Card 3 -->
-    <div class="card-container">
-      <img src="@/assets/ritos.png" alt="Ritos" class="card-image-top">
-      <div class="card-content">
-        <h3 class="card-title">Ritos</h3>
-        <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
-        <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
-        <div class="button-line"></div> 
-      </div>
-    </div>
-  </div>
-</section>
+          <!-- Card 3 -->
+          <div class="card-container">
+            <img src="@/assets/ritos.jpeg" alt="Ritos" class="card-image-top">
+            <div class="card-content">
+              <h3 class="card-title">Ritos</h3>
+              <p class="card-description">Realizamos diversos rituais que preservam a ancestralidade, honram nossa herança genética e resgatam o conhecimento milenar das culturas ao redor do mundo.</p>
+              <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
+              <div class="button-line"></div> 
+            </div>
+          </div>
+        </div>
+      </section>
 
 <br>
 <br>
@@ -114,10 +112,10 @@
       <div class="cards-container">
         <!-- Card 1 -->
         <div class="card-container">
-          <img src="@/assets/encontro-mulheres.png" alt="Encontro de mulheres" class="card-image-top">
+          <img src="@/assets/encontro-mulheres.jpeg" alt="Encontro de mulheres" class="card-image-top">
           <div class="card-content">
             <h3 class="card-title">Encontro de Mulheres</h3>
-            <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
+            <p class="card-description">Organizamos eventos exclusivos para mulheres, dedicados a explorar a essência do feminino. Buscando compreender mais sobre o ser feminino, desde seu corpo biológico à suas transições de fases, além de sua profunda sacralidade.</p>
             <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
             <div class="button-line"></div> 
           </div>
@@ -125,10 +123,10 @@
 
         <!-- Card 2 -->
         <div class="card-container">
-          <img src="@/assets/consagracoes.png" alt="Vivências" class="card-image-top">
+          <img src="@/assets/consagracoes.jpeg" alt="Vivências" class="card-image-top">
           <div class="card-content">
             <h3 class="card-title">Consagrações Sagradas</h3>
-            <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
+            <p class="card-description">Sacralizamos a vida e a natureza, promovendo consagrações em homenagem e gratidão à Mãe Terra. Nosso objetivo é despertar a consciência de preservação e cuidado com nosso Lar, reafirmando nosso compromisso com o equilíbrio e a harmonia.</p>
             <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
             <div class="button-line"></div> 
           </div>
@@ -136,10 +134,10 @@
 
         <!-- Card 3 -->
         <div class="card-container">
-          <img src="@/assets/jogos.png" alt="Ritos" class="card-image-top">
+          <img src="@/assets/jogos.jpeg" alt="Ritos" class="card-image-top">
           <div class="card-content">
             <h3 class="card-title">Jogos Inteligentes</h3>
-            <p class="card-description">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
+            <p class="card-description">Estamos sempre em busca de desenvolver a mente, afastando-nos da rotina diária e concentrando nossa atenção em jogos de tabuleiro que estimulam a resolução de desafios e o pensamento estratégico.</p>
             <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
             <div class="button-line"></div> 
           </div>
@@ -193,21 +191,20 @@
           <h3 class="dinastiaText4">TORNE-SE MEMBRO</h3>
           <p class="efeitoText4">Torne-se parte do Dinastia Nagual</p>
           <p class="subefeitoText4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
-            vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. 
-            Fusce tempus tellus sed erat scelerisque venenatis.
+            Se o seu coração foi tocado e você deseja mergulhar mais fundo nos ensinamentos do grupo Dinastia Nagual, cadastre-se e venha fazer parte dessa jornada transformadora. 
+            Não seguimos dogmas religiosos, acolhemos todos aqueles que buscam cura e desejam descobrir o próprio caminho. 
+            Nosso propósito é puro e eterno: amar, curar e expandir os limites do conhecimento humano.
           </p>
           <button class="more-button1" onclick="window.location.href='/login'">Inscreva-se <i class="fas fa-arrow-right"></i></button>
         </section>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
 
-
-
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        
      <!-- Footer -->
     <footer class="footer-section">
       <div class="footer-content">
@@ -229,7 +226,7 @@
     data() {
       return {
         isDropdownOpen: false,
-        userName: localStorage.getItem('userName') || null, // Carregar o nome do usuário do localStorage
+        userName: localStorage.getItem('userName') || null,
       };
     },
 
@@ -237,19 +234,19 @@
       toggleDropdown() {
         this.isDropdownOpen = !this.isDropdownOpen;
       },
-       // Função para redirecionar para o perfil do usuário
+       
    goToProfile() {
       if (this.userName) {
-        this.$router.push('/perfil'); // Redireciona para o perfil do usuário, caso esteja logado
+        this.$router.push('/perfil'); 
       } else {
-        window.location.href = '/login'; // Redireciona para a página de login se não estiver logado
+        window.location.href = '/login'; 
       }
     },
-    // Função para sair (remover o nome do localStorage)
+    
     logout() {
-      localStorage.removeItem('userName'); // Remove o nome do usuário do localStorage
-      this.userName = null; // Reseta o nome no Vue.js
-      window.location.href = '/'; // Redireciona para a página de login
+      localStorage.removeItem('userName'); 
+      this.userName = null; 
+      window.location.href = '/'; 
     }
     },
   };

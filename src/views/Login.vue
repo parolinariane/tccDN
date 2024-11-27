@@ -1,16 +1,6 @@
 <template>
 	<div class="fundo">
 		<div :class="['container', { 'right-panel-active': isRightPanelActive }]">
-			<!-- Cadastro -->
-			<div class="container__form container--signup">
-				<form class="form" @submit.prevent="handleSubmit('signup')">
-					<h2 class="form__title">Cadastre-se</h2>
-					<input type="text" placeholder="Usuário" class="input" v-model="signupForm.name" />
-					<input type="email" placeholder="E-mail" class="input" v-model="signupForm.email" />
-					<input type="password" placeholder="Senha" class="input" v-model="signupForm.password" />
-					<button class="btn" type="submit">Cadastrar</button>
-				</form>
-			</div>
 
 			<!-- Login -->
 			<div class="container__form container--signin">
@@ -19,6 +9,17 @@
 					<input type="email" placeholder="E-mail" class="input" v-model="signinForm.email" />
 					<input type="password" placeholder="Senha" class="input" v-model="signinForm.password" />
 					<button class="btn" type="submit">Acessar</button>
+				</form>
+			</div>
+
+			<!-- Cadastro -->
+			<div class="container__form container--signup">
+				<form class="form" @submit.prevent="handleSubmit('signup')">
+					<h2 class="form__title">Cadastre-se</h2>
+					<input type="text" placeholder="Usuário" class="input" v-model="signupForm.name" />
+					<input type="email" placeholder="E-mail" class="input" v-model="signupForm.email" />
+					<input type="password" placeholder="Senha" class="input" v-model="signupForm.password" />
+					<button class="btn" type="submit">Cadastrar</button>
 				</form>
 			</div>
 
@@ -63,7 +64,7 @@ export default {
 			},
 			notification: {
 				message: '',
-				type: '', // 'success' ou 'error'
+				type: '', 
 			},
 		};
 	},
@@ -78,7 +79,7 @@ export default {
 
 			setTimeout(() => {
 				this.notification.message = '';
-			}, 3000); // Oculta após 3 segundos
+			}, 3000);
 		},
 
 		async handleSubmit(formType) {
@@ -87,45 +88,35 @@ export default {
 					const response = await axios.post('http://localhost:5161/api/auth/cadastro', this.signupForm);
 					console.log('Cadastro sucesso:', response.data);
 
-					// Notificação de sucesso
 					this.showNotification('Cadastro realizado com sucesso!', 'success');
-				} catch (error) {
+				} 
+				catch (error) 
+				{
 					console.error('Erro ao cadastrar usuário:', error.response?.data || error.message);
-
-					// Notificação de erro
 					this.showNotification('Erro ao realizar cadastro. Verifique os dados e tente novamente.', 'error');
 				}
 			} else if (formType === 'signin') {
-				try {
+				try 
+				{
 					const response = await axios.post('http://localhost:5161/api/auth/login', this.signinForm);
 					console.log('Login sucesso:', response.data);
 
-					// Após o login, obter o role diretamente com o endpoint de role
 					const roleResponse = await axios.get('http://localhost:5161/api/auth/role', {
 						params: { email: this.signinForm.email }  // Passar o email para obter o role
 					});
 
-					// Salvar a role no localStorage (Admin ou Viewer)
-					localStorage.setItem('role', roleResponse.data.role); // "Admin" ou "Viewer"
-
-
-					// Se o login for bem-sucedido, obter o nome do usuário
+					localStorage.setItem('role', roleResponse.data.role); 
 					const nomeResponse = await axios.get(`http://localhost:5161/api/auth/nome`, {
-					params: { email: this.signinForm.email }  // Enviar o e-mail do usuário para buscar o nome
+					params: { email: this.signinForm.email }  
 					});
 
-					// Salvar o nome do usuário no localStorage
 					localStorage.setItem('userName', nomeResponse.data.nome);
-
-					// Notificação de sucesso
 					this.showNotification('Login realizado com sucesso!', 'success');
-
-					// Redirecionar para a página inicial
 					window.location.href = '/';
-				} catch (error) {
+				} 
+				catch (error) 
+				{
 					console.error('Erro ao fazer login:', error.response?.data || error.message);
-
-					// Notificação de erro
 					this.showNotification('Erro ao fazer login. Verifique suas credenciais.', 'error');
 				}
 			}
@@ -166,7 +157,6 @@ export default {
 		display: none;
 	}
 }
-
 
 .fundo {
 	background-color: #8ecf98;

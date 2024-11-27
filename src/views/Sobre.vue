@@ -10,7 +10,6 @@
   <div class="user-profile">
     <div class="avatar-container" @click="toggleDropdown">
       <span class="user" @click="goToProfile">
-        <!-- Exibe o nome do usuário se ele estiver logado, caso contrário exibe "Login/Cadastre-se" -->
         {{ userName || 'Login/Cadastre-se' }}
       </span>
       <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
@@ -79,48 +78,82 @@
   <p class="efeitoText2">Nossos Servidores</p>
 
   <div class="equipe-container">
-    <!-- Membro 1 -->
+
     <div class="equipe-card">
       <img src="@/assets/isabelaBergamo.png" alt="Membro 1" class="equipe-img">
       <div class="equipe-info">
         <p class="nome">Isabela Bergamo</p><br>
-        <p class="descricao-servidor"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
-          vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. </p>
       </div>
     </div>
 
-    <!-- Membro 2 -->
     <div class="equipe-card">
       <img src="@/assets/vanderleiCarneosso.png" alt="Membro 2" class="equipe-img">
       <div class="equipe-info">
         <p class="nome">Vanderlei Carneosso</p><br>
-        <p class="descricao-servidor"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
-          vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. </p>
       </div>
     </div>
 
-    <!-- Membro 3 -->
     <div class="equipe-card">
       <img src="@/assets/leticiaGarbin.png" alt="Membro 3" class="equipe-img">
       <div class="equipe-info">
         <p class="nome">Leticia Garbin</p><br>
-        <p class="descricao-servidor"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
-          vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. </p>
       </div>
     </div>
 
-    <!-- Membro 4 -->
     <div class="equipe-card">
       <img src="@/assets/leticiaGebara.png" alt="Membro 4" class="equipe-img">
       <div class="equipe-info">
         <p class="nome">Leticia Gebara</p><br>
-        <p class="descricao-servidor"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tellus leo, 
-          vestibulum a ipsum sed, suscipit sodales ex. Vestibulum id varius risus. </p>
       </div>
     </div>
+
+    <div class="equipe-card">
+      <img src="@/assets/fernandoReis.jpeg" alt="Membro 5" class="equipe-img">
+      <div class="equipe-info">
+        <p class="nome">Fernando Reis</p><br>
+      </div>
+    </div>
+
+    <div class="equipe-card">
+      <img src="@/assets/yasmimBergamo.jpeg" alt="Membro 6" class="equipe-img">
+      <div class="equipe-info">
+        <p class="nome">Yasmim Bergamo</p><br>
+      </div>
+    </div>
+
+    <div class="equipe-card">
+      <img src="@/assets/brendaBoscarini.jpeg" alt="Membro 7" class="equipe-img">
+      <div class="equipe-info">
+        <p class="nome">Brenda Boscarini</p><br>
+      </div>
+    </div>
+
+    <div class="equipe-card">
+      <img src="@/assets/jullyCardoso.jpeg" alt="Membro 8" class="equipe-img">
+      <div class="equipe-info">
+        <p class="nome">Jully Cardoso</p><br>
+      </div>
+    </div>
+
+    <div class="equipe-card">
+      <img src="@/assets/robertoVivesJr.jpeg" alt="Membro 9" class="equipe-img">
+      <div class="equipe-info">
+        <p class="nome">Roberto Vives Jr</p><br>
+      </div>
+    </div>
+
+    <div class="equipe-card">
+      <img src="@/assets/danielEscanuella.jpeg" alt="Membro 10" class="equipe-img">
+      <div class="equipe-info">
+        <p class="nome">Daniel Escanuella</p><br>
+      </div>
+    </div>
+
   </div>
 </section>
  
+  <br>
+  <br>
   <br>
   <br>
   <br>
