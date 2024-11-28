@@ -1,29 +1,27 @@
 <template>
-    <header class="header">
-  <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
-  <nav class="nav-bar">
-    <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
-    <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
-    <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
-    <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
-  </nav>
-  <div class="user-profile">
-    <div class="avatar-container" @click="toggleDropdown">
-      <span class="user" @click="goToProfile">
-        <!-- Exibe o nome do usuário se ele estiver logado, caso contrário exibe "Login/Cadastre-se" -->
-        {{ userName || 'Login/Cadastre-se' }}
-      </span>
-      <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+ <header class="header">
+    <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
+    <nav class="nav-bar">
+      <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
+      <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
+      <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
+      <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
+    </nav>
+    <div class="user-profile">
+      <div class="avatar-container">
+        <span class="user" @click="goToProfile">
+          <span class="arrow-down"  @click.stop="toggleDropdown"></span>
+          {{ userName || 'Login/Cadastre-se' }}
+        </span>
+        <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+      </div>
+      <div v-show="isDropdownOpen" class="dropdown-menu">
+        <ul>
+          <li><a href="#" @click="logout">Sair</a></li>
+        </ul>
+      </div>
     </div>
-    <div v-show="isDropdownOpen" class="dropdown-menu">
-      <ul>
-        <li><a href="#">Configurações</a></li>
-        <li><a href="#" @click="logout">Sair</a></li>
-      </ul>
-    </div>
-  </div>
-</header>
-  
+  </header>
   
     <!-- Seção Cadastro Eventos -->
     <section class="sobre-section">
@@ -80,25 +78,18 @@
     Cadastrar Evento <i class="fas fa-plus"></i>
   </button>
 </form>
-
-        
-    </section>
+</section>
    
     <br>
     <br>
     <br>
     <br>
   
-
    <!-- Footer -->
   <footer class="footer-section">
     <div class="footer-content">
       <img src="@/assets/logoFooter.png" alt="Logo Footer" class="footer-logo">
       <p class="footerText">Copyright &copy; 2024 Dinastia Nagual. Todos os direitos reservados.</p>
-      <div class="contact-info">
-        <p><i class="fas fa-envelope"></i> dinastianagual@gmail.com</p>
-        <p><i class="fas fa-phone-alt"></i> (11) 9 1234 5678</p>
-      </div>
     </div>
   </footer>
   
@@ -113,7 +104,7 @@ export default {
   data() {
     return {
       isDropdownOpen: false,
-      userName: localStorage.getItem('userName') || null, // Carregar o nome do usuário do localStorage
+      userName: localStorage.getItem('userName') || null,
       eventData: {
         nomeEvento: "",
         tipoEvento: "",
@@ -134,26 +125,26 @@ export default {
         const response = await axios.post("http://localhost:5161/api/evento", this.eventData);
         alert("Evento cadastrado com sucesso!");
         console.log(response.data);
-        // Limpar os campos após o envio bem-sucedido
+       
         this.resetForm();
       } catch (error) {
         alert("Erro ao cadastrar evento.");
         console.error(error);
       }
     },
-     // Função para redirecionar para o perfil do usuário
+  
    goToProfile() {
       if (this.userName) {
-        this.$router.push('/perfil'); // Redireciona para o perfil do usuário, caso esteja logado
+        this.$router.push('/cadastro'); 
       } else {
-        window.location.href = '/login'; // Redireciona para a página de login se não estiver logado
+        window.location.href = '/login'; 
       }
     },
-    // Função para sair (remover o nome do localStorage)
+  
     logout() {
-      localStorage.removeItem('userName'); // Remove o nome do usuário do localStorage
-      this.userName = null; // Reseta o nome no Vue.js
-      window.location.href = '/login'; // Redireciona para a página de login
+      localStorage.removeItem('userName'); 
+      this.userName = null; 
+      window.location.href = '/login'; 
     },
 
     resetForm() {
@@ -230,9 +221,9 @@ textarea {
   .footer-section {
   background-color: #186215;
   color: #ffffff;
-  padding: 20px 0; 
+  padding: 20px 0;
   display: flex;
-  justify-content: space-between; 
+  justify-content: center; 
   align-items: center;
   width: 100%;
   background-image: url('@/assets/footer.png');
@@ -240,24 +231,39 @@ textarea {
   background-position: center;
   background-repeat: no-repeat;
   box-sizing: border-box;
-  }
+}
   
-  .footer-content {
+.footer-content {
   display: flex;
-  justify-content: space-between; 
+  flex-direction: column; 
+  align-items: center; 
   width: 100%;
-  max-width: 1200px; 
-  margin: 0 auto; 
-  padding: 0 20px; 
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
   .logo-container {
   flex: 0 1 auto;
   }
   
   .footer-logo {
-  max-width: 180px; 
-  }
+  max-width: 180px;
+  margin-bottom: 10px; 
+}
+
+/* Seta para baixo */
+.arrow-down {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #000000;
+}
+  
   
   .footerText{
   font-family: 'Poppins', sans-serif; 
@@ -567,7 +573,7 @@ textarea {
   top: 50%;
   width: 30%;
   height: 2px;
-  background-color: #186215; 
+  background-color: #6c9b7f; 
   }
   
   .dinastiaText2::before {

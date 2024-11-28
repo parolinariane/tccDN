@@ -1,33 +1,34 @@
 <template>
-<header class="header">
-  <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
-  <nav class="nav-bar">
-    <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
-    <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
-    <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
-    <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
-  </nav>
-  <div class="user-profile">
-    <div class="avatar-container" @click="toggleDropdown">
-      <span class="user" @click="goToProfile">
-        {{ userName || 'Login/Cadastre-se' }}
-      </span>
-      <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+ <header class="header">
+    <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
+    <nav class="nav-bar">
+      <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
+      <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
+      <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
+      <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
+    </nav>
+    <div class="user-profile">
+      <div class="avatar-container">
+        <span class="user" @click="goToProfile">
+          <span class="arrow-down"  @click.stop="toggleDropdown"></span>
+          {{ userName || 'Login/Cadastre-se' }}
+        </span>
+        <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+      </div>
+      <div v-show="isDropdownOpen" class="dropdown-menu">
+        <ul>
+          <li><a href="#" @click="logout">Sair</a></li>
+        </ul>
+      </div>
     </div>
-    <div v-show="isDropdownOpen" class="dropdown-menu">
-      <ul>
-        <li><a href="#">Configurações</a></li>
-        <li><a href="#" @click="logout">Sair</a></li>
-      </ul>
-    </div>
-  </div>
-</header>
+  </header>
 
   <main class="main-content">
     <section class="intro-text">
       <h3 class="dinastiaText">SOBRE NÓS</h3>
       <p class="efeitoText">A felicidade é uma decisão, <br> não um destino.<br> Realize isso conosco!</p>
-      <p class="subefeitoText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+      <p class="subefeitoText">A felicidade é um escolha, uma decisão, é o poder pessoal. Um verdadeiro sábio é capaz de enfrentar qualquer desafio, superar qualquer obstáculo e triunfar, pois carrega dentro de si os ingredientes para o sucesso: amor-próprio, paz interior e plena consciência de si mesmo e do mundo ao redor. 
+        Nossa missão é seguir os passos dos sábios, guiados sempre pela humildade, pelo amor e por uma consciência elevada.</p>
     </section>
     <img src="@/assets/imgSobre.png" alt="Imagem de Meditação" class="meditation-img" />
   </main>
@@ -115,66 +116,21 @@
     </div>
 
     <div class="equipe-card">
-      <img src="@/assets/yasmimBergamo.jpeg" alt="Membro 6" class="equipe-img">
-      <div class="equipe-info">
-        <p class="nome">Yasmim Bergamo</p><br>
-      </div>
-    </div>
-
-    <div class="equipe-card">
-      <img src="@/assets/brendaBoscarini.jpeg" alt="Membro 7" class="equipe-img">
-      <div class="equipe-info">
-        <p class="nome">Brenda Boscarini</p><br>
-      </div>
-    </div>
-
-    <div class="equipe-card">
-      <img src="@/assets/jullyCardoso.jpeg" alt="Membro 8" class="equipe-img">
-      <div class="equipe-info">
-        <p class="nome">Jully Cardoso</p><br>
-      </div>
-    </div>
-
-    <div class="equipe-card">
       <img src="@/assets/robertoVivesJr.jpeg" alt="Membro 9" class="equipe-img">
       <div class="equipe-info">
         <p class="nome">Roberto Vives Jr</p><br>
       </div>
     </div>
-
-    <div class="equipe-card">
-      <img src="@/assets/danielEscanuella.jpeg" alt="Membro 10" class="equipe-img">
-      <div class="equipe-info">
-        <p class="nome">Daniel Escanuella</p><br>
-      </div>
-    </div>
-
   </div>
 </section>
- 
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
 
  <!-- Footer -->
-<footer class="footer-section">
-  <div class="footer-content">
-    <img src="@/assets/logoFooter.png" alt="Logo Footer" class="footer-logo">
-    <p class="footerText">Copyright &copy; 2024 Dinastia Nagual. Todos os direitos reservados.</p>
-    <div class="contact-info">
-      <p><i class="fas fa-envelope"></i> dinastianagual@gmail.com</p>
-      <p><i class="fas fa-phone-alt"></i> (11) 9 1234 5678</p>
+ <footer class="footer-section">
+    <div class="footer-content">
+      <img src="@/assets/logoFooter.png" alt="Logo Footer" class="footer-logo">
+      <p class="footerText">Copyright &copy; 2024 Dinastia Nagual. Todos os direitos reservados.</p>
     </div>
-  </div>
-</footer>
+  </footer>
 
 </template>
 
@@ -196,7 +152,7 @@ methods: {
    
    goToProfile() {
       if (this.userName) {
-        this.$router.push('/perfil'); 
+        this.$router.push('/sobre'); 
       } else {
         window.location.href = '/login';
       }
@@ -308,35 +264,37 @@ methods: {
 
 /* Estilo para o footer */
 .footer-section {
-background-color: #186215;
-color: #ffffff;
-padding: 20px 0; 
-display: flex;
-justify-content: space-between; 
-align-items: center;
-width: 100%;
-background-image: url('@/assets/footer.png');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-box-sizing: border-box;
+  background-color: #186215;
+  color: #ffffff;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  width: 100%;
+  background-image: url('@/assets/footer.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
 }
-
+  
 .footer-content {
-display: flex;
-justify-content: space-between; 
-width: 100%;
-max-width: 1200px; 
-margin: 0 auto; 
-padding: 0 20px; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.logo-container {
-flex: 0 1 auto;
-}
-
-.footer-logo {
-max-width: 180px; 
+  .logo-container {
+  flex: 0 1 auto;
+  }
+  
+  .footer-logo {
+  max-width: 180px;
+  margin-bottom: 10px; 
 }
 
 .footerText{
@@ -384,6 +342,19 @@ font-size: 12px;
 }
 
 
+/* Seta para baixo */
+.arrow-down {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #000000;
+}
+  
+
 /* Estilo da seção "Dinastia" */
 
 .header {
@@ -430,7 +401,7 @@ content: '';
 display: block;
 width: 250px; 
 height: 2px; 
-background-color: #186215; 
+background-color: #6c9b7f; 
 margin-left: 10px; 
 }
 
@@ -643,7 +614,7 @@ position: absolute;
 top: 50%;
 width: 30%;
 height: 2px;
-background-color: #186215; 
+background-color: #6c9b7f; 
 }
 
 .dinastiaText2::before {

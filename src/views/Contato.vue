@@ -1,34 +1,39 @@
 <template>
-  <header class="header">
-  <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
-  <nav class="nav-bar">
-    <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
-    <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
-    <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
-    <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
-  </nav>
-  <div class="user-profile">
-    <div class="avatar-container" @click="toggleDropdown">
-      <span class="user" @click="goToProfile">
-        {{ userName || 'Login/Cadastre-se' }}
-      </span>
-      <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+ <header class="header">
+    <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
+    <nav class="nav-bar">
+      <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
+      <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
+      <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
+      <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
+    </nav>
+    <div class="user-profile">
+      <div class="avatar-container">
+        <span class="user" @click="goToProfile">
+          <span class="arrow-down"  @click.stop="toggleDropdown"></span>
+          {{ userName || 'Login/Cadastre-se' }}
+        </span>
+        <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+      </div>
+      <div v-show="isDropdownOpen" class="dropdown-menu">
+        <ul>
+          <li><a href="#" @click="logout">Sair</a></li>
+        </ul>
+      </div>
     </div>
-    <div v-show="isDropdownOpen" class="dropdown-menu">
-      <ul>
-        <li><a href="#">Configurações</a></li>
-        <li><a href="#" @click="logout">Sair</a></li>
-      </ul>
-    </div>
-  </div>
-</header>
-
+  </header>
 
   <main class="main-content">
     <section class="intro-text">
-      <img src="@/assets/instagram.png" alt="Instagram" class="social-icon instagram">
-      <img src="@/assets/whatsapp.png" alt="Whatsapp" class="social-icon whatsapp">
-      <img src="@/assets/email.png" alt="Email" class="social-icon email">
+      <a href="https://www.instagram.com/dinastianagual?igsh=ZjIyNXluOWkxYmN0" target="_blank" rel="noopener noreferrer">
+        <img src="@/assets/instagram.png" alt="Instagram" class="social-icon instagram">
+      </a>
+      <a href="https://wa.me/5511941713792?text=Olá%2C%20entrei%20em%20contato%20pelo%20site%20da%20Dinastia%20Nagual%20e%20gostaria%20de%20mais%20informações." target="_blank" rel="noopener noreferrer">
+        <img src="@/assets/wpp.png" alt="WhatsApp" class="social-icon whatsapp">
+      </a>
+      <a href="mailto:dinastianagual@gmail.com?subject=Contato%20pelo%20site&body=Olá%2C%20entrei%20em%20contato%20pelo%20site%20da%20Dinastia%20Nagual." target="_blank" rel="noopener noreferrer">
+        <img src="@/assets/email.png" alt="Email" class="social-icon email">
+      </a>
     </section>
   </main>
 
@@ -39,7 +44,7 @@
 <br>
 
 
-<!-- Seção Contato -->
+<!-- Seção Contato
 <section class="contato-section">
   <div class="contato-container">
     <div class="contato-info">
@@ -67,19 +72,15 @@
       </form>
     </div>
   </div>
-</section>
+</section> -->
 
  <!-- Footer -->
-<footer class="footer-section">
-  <div class="footer-content">
-    <img src="@/assets/logoFooter.png" alt="Logo Footer" class="footer-logo">
-    <p class="footerText">Copyright &copy; 2024 Dinastia Nagual. Todos os direitos reservados.</p>
-    <div class="contact-info">
-      <p><i class="fas fa-envelope"></i> dinastianagual@gmail.com</p>
-      <p><i class="fas fa-phone-alt"></i> (11) 9 1234 5678</p>
+ <footer class="footer-section">
+    <div class="footer-content">
+      <img src="@/assets/logoFooter.png" alt="Logo Footer" class="footer-logo">
+      <p class="footerText">Copyright &copy; 2024 Dinastia Nagual. Todos os direitos reservados.</p>
     </div>
-  </div>
-</footer>
+  </footer>
 
 </template>
 
@@ -101,7 +102,7 @@ methods: {
    
    goToProfile() {
       if (this.userName) {
-        this.$router.push('/perfil'); 
+        this.$router.push('/contato'); 
       } else {
         window.location.href = '/login'; 
       }
@@ -127,6 +128,19 @@ methods: {
   padding: 50px 0;
   background-color: #fdf9f6;
 }
+
+/* Seta para baixo */
+.arrow-down {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #000000;
+}
+  
 
 .contato-container {
   display: flex;
@@ -246,7 +260,6 @@ form {
   align-items: center; 
   gap: 20px; 
   margin-top: 20px; 
-  margin-left: 12%;
 }
 
 .social-icon {
@@ -257,35 +270,37 @@ form {
 
 /* Estilo para o footer */
 .footer-section {
-background-color: #186215;
-color: #ffffff;
-padding: 20px 0; 
-display: flex;
-justify-content: space-between; 
-align-items: center;
-width: 100%;
-background-image: url('@/assets/footer.png');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-box-sizing: border-box;
+  background-color: #186215;
+  color: #ffffff;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  width: 100%;
+  background-image: url('@/assets/footer.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
 }
-
+  
 .footer-content {
-display: flex;
-justify-content: space-between; 
-width: 100%;
-max-width: 1200px; 
-margin: 0 auto; 
-padding: 0 20px; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.logo-container {
-flex: 0 1 auto;
-}
-
-.footer-logo {
-max-width: 180px; 
+  .logo-container {
+  flex: 0 1 auto;
+  }
+  
+  .footer-logo {
+  max-width: 180px;
+  margin-bottom: 10px; 
 }
 
 .footerText{
@@ -480,9 +495,10 @@ background-color: #f0f0f0;
 }
 
 .main-content {
-display: flex;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
 }
 
 .intro-text h3 {

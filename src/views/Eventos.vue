@@ -1,28 +1,27 @@
 <template>
-<header class="header">
-  <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
-  <nav class="nav-bar">
-    <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
-    <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
-    <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
-    <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
-  </nav>
-  <div class="user-profile">
-    <div class="avatar-container" @click="toggleDropdown">
-      <span class="user" @click="goToProfile">
-        <!-- Exibe o nome do usuário se ele estiver logado, caso contrário exibe "Login/Cadastre-se" -->
-        {{ userName || 'Login/Cadastre-se' }}
-      </span>
-      <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+ <header class="header">
+    <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
+    <nav class="nav-bar">
+      <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
+      <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
+      <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
+      <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
+    </nav>
+    <div class="user-profile">
+      <div class="avatar-container">
+        <span class="user" @click="goToProfile">
+          <span class="arrow-down"  @click.stop="toggleDropdown"></span>
+          {{ userName || 'Login/Cadastre-se' }}
+        </span>
+        <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+      </div>
+      <div v-show="isDropdownOpen" class="dropdown-menu">
+        <ul>
+          <li><a href="#" @click="logout">Sair</a></li>
+        </ul>
+      </div>
     </div>
-    <div v-show="isDropdownOpen" class="dropdown-menu">
-      <ul>
-        <li><a href="#">Configurações</a></li>
-        <li><a href="#" @click="logout">Sair</a></li>
-      </ul>
-    </div>
-  </div>
-</header>
+  </header>
 
 
   <!-- Seção O Grupo -->
@@ -30,7 +29,7 @@
       <h3 class="dinastiaText2">AGENDA DE EVENTOS</h3>
 
       <div v-if="events.length === 0" class="no-events">
-        <p>Não há eventos cadastrados.</p>
+        <p>Faça login para visualizar os eventos.</p>
       </div>
 
       <div v-else class="event-list">
@@ -93,16 +92,12 @@
 
 
  <!-- Footer -->
-<footer class="footer-section">
-  <div class="footer-content">
-    <img src="@/assets/logoFooter.png" alt="Logo Footer" class="footer-logo">
-    <p class="footerText">Copyright &copy; 2024 Dinastia Nagual. Todos os direitos reservados.</p>
-    <div class="contact-info">
-      <p><i class="fas fa-envelope"></i> dinastianagual@gmail.com</p>
-      <p><i class="fas fa-phone-alt"></i> (11) 9 1234 5678</p>
+ <footer class="footer-section">
+    <div class="footer-content">
+      <img src="@/assets/logoFooter.png" alt="Logo Footer" class="footer-logo">
+      <p class="footerText">Copyright &copy; 2024 Dinastia Nagual. Todos os direitos reservados.</p>
     </div>
-  </div>
-</footer>
+  </footer>
 
 </template>
 
@@ -115,11 +110,11 @@ name: "PaginaEventos",
 data() {
   return {
     isDropdownOpen: false,
-    userName: localStorage.getItem('userName') || null, // Carregar o nome do usuário do localStorage
-    isAdmin: localStorage.getItem('role') === 'Admin', // Verificar se o usuário é Admin
-    events: [], // Armazena os eventos recebidos da API
+    userName: localStorage.getItem('userName') || null, 
+    isAdmin: localStorage.getItem('role') === 'Admin',
+    events: [], 
     isEditModalOpen: false,
-    currentEvent: {}, // Evento que está sendo editado
+    currentEvent: {}, 
   };
 },
 
@@ -130,20 +125,20 @@ methods: {
   async fetchEvents() {
       try {
         const response = await axios.get("http://localhost:5161/api/evento");
-        this.events = response.data; // Preenche a lista de eventos
+        this.events = response.data; 
       } catch (error) {
         console.error("Erro ao buscar os eventos:", error);
         alert("Não foi possível carregar os eventos.");
       }
     },
-     // Formata o dia do evento
+    
      formatDateDay(dateString) {
       const date = new Date(dateString);
       return date.getDate().toString().padStart(2, "0");
     },
 
     openEditModal(event) {
-      this.currentEvent = { ...event }; // Copia os dados do evento selecionado
+      this.currentEvent = { ...event }; 
       this.isEditModalOpen = true;
     },
 
@@ -171,7 +166,7 @@ methods: {
       if (confirm("Tem certeza que deseja deletar este evento?")) {
         try {
           await axios.delete(`http://localhost:5161/api/evento/${id}`);
-          this.events = this.events.filter(event => event.id !== id); // Remove o evento da lista
+          this.events = this.events.filter(event => event.id !== id); 
           alert("Evento deletado com sucesso!");
         } catch (error) {
           console.error("Erro ao deletar o evento:", error);
@@ -180,7 +175,7 @@ methods: {
       }
     },
 
-    // Formata o mês do evento
+   
     formatDateMonth(dateString) {
       const date = new Date(dateString);
       const months = [
@@ -199,23 +194,21 @@ methods: {
       ];
       return months[date.getMonth()];
     },
-     // Função para redirecionar para o perfil do usuário
+   
    goToProfile() {
       if (this.userName) {
-        this.$router.push('/perfil'); // Redireciona para o perfil do usuário, caso esteja logado
+        this.$router.push('/eventos'); 
       } else {
-        window.location.href = '/login'; // Redireciona para a página de login se não estiver logado
+        window.location.href = '/login'; 
       }
     },
-    // Função para sair (remover o nome do localStorage)
     logout() {
-      localStorage.removeItem('userName'); // Remove o nome do usuário do localStorage
-      this.userName = null; // Reseta o nome no Vue.js
-      window.location.href = '/login'; // Redireciona para a página de login
+      localStorage.removeItem('userName'); 
+      this.userName = null; 
+      window.location.href = '/login';
     }
   },
 
-    // Busca os eventos quando o componente é carregado
     mounted() {
     this.fetchEvents();
   },
@@ -278,7 +271,7 @@ methods: {
   color: white;
   font-size: 13px;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  margin-right: 10px; /* Adiciona espaçamento à direita do botão Editar */
+  margin-right: 10px;
 }
 
 .edit-button:hover {
@@ -327,7 +320,7 @@ methods: {
 .event-list {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Reduzido o espaçamento entre os cartões */
+  gap: 15px; 
 }
 
 .event-card {
@@ -335,7 +328,7 @@ methods: {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 5px; /* Reduzido o padding para diminuir a parte branca */
+  padding: 5px; 
   align-items: center;
 }
 
@@ -384,7 +377,7 @@ methods: {
 @media (max-width: 768px) {
   .agenda-section {
     width: 100%;
-    padding: 15px; /* Reduzido para responsividade */
+    padding: 15px;
   }
 
   .event-card {
@@ -401,35 +394,37 @@ methods: {
 
 /* Estilo para o footer */
 .footer-section {
-background-color: #186215;
-color: #ffffff;
-padding: 20px 0; 
-display: flex;
-justify-content: space-between; 
-align-items: center;
-width: 100%;
-background-image: url('@/assets/footer.png');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-box-sizing: border-box;
+  background-color: #186215;
+  color: #ffffff;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  width: 100%;
+  background-image: url('@/assets/footer.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
 }
-
+  
 .footer-content {
-display: flex;
-justify-content: space-between; 
-width: 100%;
-max-width: 1200px; 
-margin: 0 auto; 
-padding: 0 20px; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.logo-container {
-flex: 0 1 auto;
-}
-
-.footer-logo {
-max-width: 180px; 
+  .logo-container {
+  flex: 0 1 auto;
+  }
+  
+  .footer-logo {
+  max-width: 180px;
+  margin-bottom: 10px; 
 }
 
 .footerText{
@@ -448,6 +443,19 @@ flex: 1;
 font-size: 14px;
 margin-top: 10px; 
 }
+
+/* Seta para baixo */
+.arrow-down {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #000000;
+}
+  
 
 .contact-info p {
 margin: 5px 0;
@@ -740,7 +748,7 @@ position: absolute;
 top: 50%;
 width: 30%;
 height: 2px;
-background-color: #186215; 
+background-color: #6c9b7f; 
 }
 
 .dinastiaText2::before {

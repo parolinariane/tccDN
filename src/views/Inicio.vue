@@ -1,27 +1,28 @@
 <template>
-<header class="header">
-  <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
-  <nav class="nav-bar">
-    <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
-    <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
-    <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
-    <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
-  </nav>
-  <div class="user-profile">
-    <div class="avatar-container" @click="toggleDropdown">
-      <span class="user" @click="goToProfile">
-        {{ userName || 'Login/Cadastre-se' }}
-      </span>
-      <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+ <header class="header">
+    <img src="@/assets/logoDinastia.png" alt="Logo Dinastia Nagual" class="logo" />
+    <nav class="nav-bar">
+      <router-link to="/" :class="{ 'active': $route.path === '/' }">Início</router-link>
+      <router-link to="/sobre" :class="{ 'active': $route.path === '/sobre' }">Sobre</router-link>
+      <router-link to="/eventos" :class="{ 'active': $route.path === '/eventos' }">Eventos</router-link>
+      <router-link to="/contato" :class="{ 'active': $route.path === '/contato' }">Contato</router-link>
+    </nav>
+    <div class="user-profile">
+      <div class="avatar-container">
+        <span class="user" @click="goToProfile">
+          <span class="arrow-down"  @click.stop="toggleDropdown"></span>
+          {{ userName || 'Login/Cadastre-se' }}
+        </span>
+        <img src="@/assets/avatar.png" alt="Avatar do Usuário" class="avatar" />
+      </div>
+      <div v-show="isDropdownOpen" class="dropdown-menu">
+        <ul>
+
+          <li><a href="#" @click="logout">Sair</a></li>
+        </ul>
+      </div>
     </div>
-    <div v-show="isDropdownOpen" class="dropdown-menu">
-      <ul>
-        <li><a href="#">Configurações</a></li>
-        <li><a href="#" @click="logout">Sair</a></li>
-      </ul>
-    </div>
-  </div>
-</header>
+  </header>
 
       <main class="main-content">
         <section class="intro-text">
@@ -30,15 +31,6 @@
           <p class="subefeitoText">Prepare-se para uma jornada épica de autodescoberta, onde cada passo revela um universo inexplorado dentro de você. 
             Por meio de eventos repletos de experiências imersivas e conhecimentos variados, você será conduzido a despertar o que há de mais único em sua essência. 
             Esta é sua chance de desvendar o extraordinário que o torna singular e de liberar a melhor e mais poderosa versão de si mesmo.</p>
-          <div class="buttons">
-            <button class="start-button">
-                Vamos começar <i class="fas fa-arrow-right"></i>
-            </button>
-            <button class="contact-button" onclick="window.location.href='/contato'">
-                Contato <i class="fas fa-phone"></i>
-            </button>
-
-          </div>
         </section>
         <img src="@/assets/imgHome.png" alt="Imagem de Meditação" class="meditation-img" />
       </main>
@@ -48,10 +40,10 @@
           <h3 class="dinastiaText2">SOBRE O DINASTIA NAGUAL</h3>
           <p class="efeitoText2">A felicidade é uma decisão, não um destino. Realize isso conosco!</p>
           <p class="subefeitoText2">
-            A felicidade é um escolha, um decisão, é o poder pessoal. Um verdadeiro sábio é capaz de enfrentar qualquer desafio, superar qualquer obstáculo e triunfar, pois carrega dentro de si os ingredientes para o sucesso: amor-próprio, paz interior e plena consciência de si mesmo e do mundo ao redor. 
+            A felicidade é um escolha, uma decisão, é o poder pessoal. Um verdadeiro sábio é capaz de enfrentar qualquer desafio, superar qualquer obstáculo e triunfar, pois carrega dentro de si os ingredientes para o sucesso: amor-próprio, paz interior e plena consciência de si mesmo e do mundo ao redor. 
             Nossa missão é seguir os passos dos sábios, guiados sempre pela humildade, pelo amor e por uma consciência elevada.
           </p>
-          <button class="more-button">Veja mais <i class="fas fa-arrow-right"></i></button>
+          <button class="more-button" onclick="window.location.href='/sobre'">Veja mais <i class="fas fa-arrow-right"></i></button>
       </section>
 
       <br>
@@ -71,7 +63,6 @@
             <div class="card-content">
               <h3 class="card-title">Palestras</h3>
               <p class="card-description">Palestras conduzidas por especialistas com profundo conhecimento teórico e prático, abrangendo temas de ciência, espiritualidade e esoterismo, em uma abordagem rica e inspiradora.</p>
-              <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
               <div class="button-line"></div> 
             </div>
           </div>
@@ -82,7 +73,6 @@
             <div class="card-content">
               <h3 class="card-title">Vivências</h3>
               <p class="card-description">Exploramos o poder da neuroplasticidade, conduzindo vivências intensas e transformadoras que esculpem novos caminhos neurais. Cada experiência é um passo rumo à renovação, cuidando profundamente do corpo, nutrindo a mente e elevando a alma a um novo patamar de consciência.</p>
-              <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
               <div class="button-line"></div> 
             </div>
           </div>
@@ -93,7 +83,6 @@
             <div class="card-content">
               <h3 class="card-title">Ritos</h3>
               <p class="card-description">Realizamos diversos rituais que preservam a ancestralidade, honram nossa herança genética e resgatam o conhecimento milenar das culturas ao redor do mundo.</p>
-              <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
               <div class="button-line"></div> 
             </div>
           </div>
@@ -116,7 +105,6 @@
           <div class="card-content">
             <h3 class="card-title">Encontro de Mulheres</h3>
             <p class="card-description">Organizamos eventos exclusivos para mulheres, dedicados a explorar a essência do feminino. Buscando compreender mais sobre o ser feminino, desde seu corpo biológico à suas transições de fases, além de sua profunda sacralidade.</p>
-            <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
             <div class="button-line"></div> 
           </div>
         </div>
@@ -127,7 +115,6 @@
           <div class="card-content">
             <h3 class="card-title">Consagrações Sagradas</h3>
             <p class="card-description">Sacralizamos a vida e a natureza, promovendo consagrações em homenagem e gratidão à Mãe Terra. Nosso objetivo é despertar a consciência de preservação e cuidado com nosso Lar, reafirmando nosso compromisso com o equilíbrio e a harmonia.</p>
-            <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
             <div class="button-line"></div> 
           </div>
         </div>
@@ -138,7 +125,6 @@
           <div class="card-content">
             <h3 class="card-title">Jogos Inteligentes</h3>
             <p class="card-description">Estamos sempre em busca de desenvolver a mente, afastando-nos da rotina diária e concentrando nossa atenção em jogos de tabuleiro que estimulam a resolução de desafios e o pensamento estratégico.</p>
-            <button class="card-button">Saiba mais <i class="fas fa-arrow-right"></i></button>
             <div class="button-line"></div> 
           </div>
         </div>
@@ -206,16 +192,12 @@
         <br>
         
      <!-- Footer -->
-    <footer class="footer-section">
-      <div class="footer-content">
-        <img src="@/assets/logoFooter.png" alt="Logo Footer" class="footer-logo">
-        <p class="footerText">Copyright &copy; 2024 Dinastia Nagual. Todos os direitos reservados.</p>
-        <div class="contact-info">
-          <p><i class="fas fa-envelope"></i> dinastianagual@gmail.com</p>
-          <p><i class="fas fa-phone-alt"></i> (11) 9 1234 5678</p>
+     <footer class="footer-section">
+        <div class="footer-content">
+          <img src="@/assets/logoFooter.png" alt="Logo Footer" class="footer-logo">
+          <p class="footerText">Copyright &copy; 2024 Dinastia Nagual. Todos os direitos reservados.</p>
         </div>
-      </div>
-    </footer>
+      </footer>
 
   </template>
   
@@ -232,12 +214,12 @@
 
     methods: {
       toggleDropdown() {
-        this.isDropdownOpen = !this.isDropdownOpen;
-      },
-       
+      this.isDropdownOpen = !this.isDropdownOpen;
+    },
+     
    goToProfile() {
       if (this.userName) {
-        this.$router.push('/perfil'); 
+        this.$router.push('/'); 
       } else {
         window.location.href = '/login'; 
       }
@@ -253,6 +235,8 @@
   </script>
   
   <style scoped>
+
+  
 /* Estilo para a seção */
 .stats-section {
   background-color: #fff;
@@ -328,25 +312,32 @@
 }
 
 .card-container {
-  width: 300px;
+  width: 320px; 
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
+  min-height: 450px; 
 }
 
 .card-image-top {
   width: 100%;
-  height: 180px;
+  height: 200px; 
   object-fit: cover;
 }
 
 .card-content {
-  background-color: #336633; 
+  background-color: #336633;
   color: white;
   padding: 15px;
   text-align: center;
-  position: relative;
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between; 
 }
 
 .card-title {
@@ -359,10 +350,11 @@
 }
 
 .card-description {
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 20px;
-  font-family: 'Cormorant', serif; 
+  font-family: 'Cormorant', serif;
   font-weight: 400;
+  flex-grow: 1;
 }
 
 .card-button {
@@ -387,9 +379,9 @@
 .footer-section {
   background-color: #186215;
   color: #ffffff;
-  padding: 20px 0; 
+  padding: 20px 0;
   display: flex;
-  justify-content: space-between; 
+  justify-content: center; 
   align-items: center;
   width: 100%;
   background-image: url('@/assets/footer.png');
@@ -398,22 +390,24 @@
   background-repeat: no-repeat;
   box-sizing: border-box;
 }
-
+  
 .footer-content {
   display: flex;
-  justify-content: space-between; 
+  flex-direction: column; 
+  align-items: center; 
   width: 100%;
-  max-width: 1200px; 
-  margin: 0 auto; 
-  padding: 0 20px; 
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.logo-container {
+  .logo-container {
   flex: 0 1 auto;
-}
-
-.footer-logo {
-  max-width: 180px; 
+  }
+  
+  .footer-logo {
+  max-width: 180px;
+  margin-bottom: 10px; 
 }
 
 .footerText{
@@ -640,6 +634,18 @@
 .imgCard1 img {
   width: 100%; 
   object-fit: cover;
+}
+
+/* Seta para baixo */
+.arrow-down {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #000000;
 }
   
 
